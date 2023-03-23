@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mini.ksh.mapper.MainMapper">
+
+	<select id="getList" resultType="mini.ksh.domain.DataVO">
+		<!-- select * from tbl_board order by bno desc -->	
+		<![CDATA[		
+			select * from mini_temp order by prodate
+		]]>
+	</select>	
+	
+	<select id="getList2" resultType="mini.ksh.domain.DataVO2">
+		<!-- select * from tbl_board order by bno desc -->	
+		<![CDATA[		
+			select /*+INDEX_desc(mini_temp index1)*/ rownum rn,to_char(prodate,'HH24') as prodate,temp,hum,discom from mini_temp 
+			where to_char(prodate,'YYYYMMDD')=to_char(sysdate,'YYYYMMDD') and rownum<13 order by prodate
+		]]>
+	</select>	
+	
+	<select id="under30Data" resultType="mini.ksh.domain.DataVO">
+		<!-- select * from tbl_board order by bno desc -->	
+		<![CDATA[		
+			select prodate,temp,hum,discom from
+			(select /*+INDEX_desc(mini_temp index1)*/ rownum rn,prodate,temp,hum,discom from mini_temp 
+			where to_char(sysdate,'MISS')<=3000 and rownum<=2 order by prodate desc)
+			where rn=2
+		]]>
+	</select>	
+	
+	<select id="upper30Data" resultType="mini.ksh.domain.DataVO">
+		<!-- select * from tbl_board order by bno desc -->	
+		<![CDATA[		
+			select /*+INDEX_desc(mini_temp index1)*/ rownum rn,prodate,temp,hum,discom from mini_temp 
+			where to_char(sysdate,'MISS')>3000 and rownum=1 order by prodate desc
+		]]>
+	</select>	
+	
+	
+</mapper>

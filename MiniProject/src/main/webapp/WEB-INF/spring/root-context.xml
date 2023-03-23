@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!--  자바로 커넥션풀 셋팅할시 코드! (히카리CP 홈페이지 참고)
+	HikariConfig config = new HikariConfig();
+	config.setJdbcUrl("jdbc:mysql://localhost:3306/simpsons");
+	config.setUsername("bart");
+	config.setPassword("51mp50n");
+	config.addDataSourceProperty("cachePrepStmts", "true");
+	config.addDataSourceProperty("prepStmtCacheSize", "250");
+	config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+	
+	HikariDataSource ds = new HikariDataSource(config);
+	-->
+		
+	<!-- 히카리CP 초기화 (커넥션 풀 설정을 위한)-->
+	<!-- id는 객체 이름, class는 class-->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+<!-- 	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> -->
+<!-- 	<property name="jdbcUrl" value="jdbc:oracle:thin:@192.168.35.22:1521:XE"></property> -->
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property> 
+		<property name="username" value="book_ex"></property>
+		<property name="password" value="book_ex"></property>
+	</bean>
+	
+	<!-- HikariDataSource는 DataSource 인터페이스를 구현한 클래스이다! -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+	<!-- id는 임의로 지정한것!, 위에꺼 id인 bbb를 이용하는거라서 밑에 ref에! bbb에 넣은것! 
+		aaa=dataSource bbb=hikariConfig -->
+	
+	<!-- 이렇게 beans로 설정해놓은 것 자체가 java에서 context로 컴포넌트 지정해놓은것과 같음!
+		그래서 바로 @Autowired 주입 가능 -->	
+	<!-- 이 scan은 일반 class 스캔하는것! 
+	<context:component-scan base-package="org.zerock.sample" />	
+	-->
+	<!-- mybatis 스프링 사용하기 위한 셋팅 -->	
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+	</bean>	
+	<!-- 저위에 id dataSource 값을 ref에서 읽어줘야함 -->
+	
+	
+	<!-- 트랜잭션 처리!! -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>	
+	<!-- 저위에 id dataSource 값을 ref에서 읽어줘야함 -->
+	<tx:annotation-driven />	
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	
+	    
+	<mybatis-spring:scan base-package="mini.ksh.mapper"/>
+	<!-- 인터페이스를 따로 구현받은 클래스가 없고, 그 자체 인터페이스를 이용할때!
+	    이걸 하면, 이 인터페이스를 받는 클래스 객체를 만들어서 스프링 되도록 됨! 
+	    그래서 따로 인터페이스 받는 클래스를 안만들어도 됨!
+	    
+	    그리고 인터페이스에 @Component 선언 안해줘도 됨!! 
+	    마이바티스에서 알아서 패키지 안에 인터페이스를 객체로 인식함
+	    그러니까 인터페이스 자체를 쓰려면 이 scan만 하고 쓸때 @Autowired 주입해서 바로 이용하면 됨!-->			
+		
+	<context:component-scan base-package="mini.ksh.service" /> 	
+</beans>
