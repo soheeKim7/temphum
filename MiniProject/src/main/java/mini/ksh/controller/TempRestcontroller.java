@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.AllArgsConstructor;
 import mini.ksh.domain.ChartDataVO;
 import mini.ksh.domain.DataVO;
+import mini.ksh.domain.DiscomVO;
 import mini.ksh.service.MainService;
 
 @RestController
@@ -34,6 +35,10 @@ public class TempRestcontroller {
 		return service.standard30Data();
 	}
 	
+	@GetMapping(value="api/discomChart",produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<DiscomVO> discomGraphList(){
+		return service.discomGraphList();
+	}
 	
 
 }

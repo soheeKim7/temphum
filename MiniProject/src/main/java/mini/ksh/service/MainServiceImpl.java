@@ -1,6 +1,7 @@
 package mini.ksh.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,9 @@ import lombok.extern.log4j.Log4j;
 import mini.ksh.domain.ChartDataVO;
 import mini.ksh.domain.DataVO;
 import mini.ksh.domain.DataVO2;
+import mini.ksh.domain.DiscomVO;
+import mini.ksh.domain.EmoticonVO;
+import mini.ksh.domain.SrcVO;
 import mini.ksh.mapper.MainMapper;
 
 @Log4j
@@ -91,5 +95,27 @@ public class MainServiceImpl implements MainService {
 		int nowNum=Integer.parseInt(fomat.format(now));		
 		log.info("제대로 숫자 변형 되었겠지?"+nowNum);
 		return nowNum<=3000 ? mapper.under30Data() : mapper.upper30Data();
+	}
+
+	@Override
+	public List<DiscomVO> discomGraphList() {
+		List<DataVO2> list=mapper.getList2();	
+		
+		List<DiscomVO> graphList=new ArrayList<>();
+		
+//		discomvo.setName(list.get(0).getProdate()+"시");
+//		discomvo.setValue(list.get(0).getDiscom());
+//		discomvo.setBulletSettings(new SrcVO(discomvo.getValue()));
+//		graphList.add(discomvo);
+		
+		for(DataVO2 vo:list) {
+			DiscomVO discomvo=new DiscomVO();
+			discomvo.setName(vo.getProdate()+"시");
+			discomvo.setValue(vo.getDiscom());
+			discomvo.setBulletSettings(new SrcVO(discomvo.getValue()));
+			graphList.add(discomvo);
+		}
+		
+		return graphList;
 	}
 }

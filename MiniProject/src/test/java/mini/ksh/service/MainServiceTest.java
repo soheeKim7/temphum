@@ -40,4 +40,9 @@ public class MainServiceTest {
 		log.info(service.standard30Data());
 	}
 	
+	@Test
+	public void testDiscomGraphList() {
+		log.info(service.discomGraphList());
+	}
+	
 }
