@@ -33,8 +33,8 @@
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property> 
 		<!-- 로컬 컴퓨터로 테스트할시 book_ex /개인 리눅스ssh로 할시 mini_temp -->
-		<property name="username" value="mini_temp"></property>	
-		<property name="password" value="mini_temp"></property>
+		<property name="username" value="book_ex"></property>	
+		<property name="password" value="book_ex"></property>
 	</bean>
 	
 	<!-- HikariDataSource는 DataSource 인터페이스를 구현한 클래스이다! -->
