@@ -82,13 +82,9 @@
    
 </ul>
 
-
-
 <script> 
-
-
 	$(document).ready(function(){
-		
+		//조회 버튼 클릭했을때,
 		$("button").on("click", function() {
 			$.ajax({
 				type : "get",
@@ -123,9 +119,10 @@
 					$("#hum").text("오류");
 					$("#discom").text("오류");
 				}			
-			});						
-		});
+			});	//ajax 끝					
+		});	//조회 버튼 눌렀을 때 끝
 		
+		//조회한 데이터와 이전 데이터 비교하기 위한 함수
 		function comparedata(temp,hum,discom){
 			$.ajax({
 				type : "get",
@@ -181,22 +178,17 @@
 					$("#comparehum").text("오류");
 					$("#comparediscom").text("오류");
 				}			
-			});
-		};
-		
+			});	//ajax 끝
+		};	//조회한 데이터와 이전 데이터 비교하기 위한 함수 끝
 	
+	}); //$(document).ready 끝
 
-	});
-
-
-</script>
-
-<script>	
 	var myprodate;
 	var mytemp;
 	var myhum;
 	var mydiscom;
 	
+	//차트 데이터 가져오는 ajax
 	$.ajax({
 		type : "get",
 		url : "/mini/api/chart",
@@ -210,10 +202,11 @@
 			mydiscom = data.mydiscom;
 			mychart();
 			//mychart2();
-			console.log("받아온 데이터들 : ", myprodate, mytemp, myhum,mydiscom);
+			console.log("가져온 차트 데이터들(날짜,온도,습도,불쾌지수) : ", myprodate, mytemp, myhum,mydiscom);
 		}
-	});
+	});	//ajax 끝
 	
+	//불쾌지수 데이터 가져오는 ajax
 	$.ajax({
 		type : "get",
 		url : "/mini/api/discomChart",
@@ -225,10 +218,9 @@
 			mychart2(mydata);
 			//console.log("받아온 데이터들 : ", myprodate, mytemp, myhum,mydiscom);
 		}
-	});
+	});	//ajax 끝
 	
 </script>
-
 
 <script  src="resources/js/script.js"></script>
 <script  src="resources/js/script2.js"></script>
