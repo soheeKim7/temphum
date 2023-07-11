@@ -16,9 +16,9 @@
 		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 		crossorigin="anonymous"></script>
 
-<h1>305교실 환경 실태</h1>
+<h1>우리집 환경 실태</h1>
 <ul>
-	<li><h3>현재의 온도, 습도, 불쾌지수 조회 <button>조회</button></h3> </li>
+	<li><h3>현재의 온도, 습도, 불쾌지수 조회 <button>조회</button></h3> <button id="test">테스트</button></li>
    	<ul>
    		<li>온도 : <span id="temp"></span> <span id="comparetemp"></span></li>
    		<li>습도 : <span id="hum"></span> <span id="comparehum"></span></li>
@@ -79,30 +79,63 @@
 	<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
 	<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 	<div id="chartdiv"></div>    
-    
-    
    
 </ul>
 
 
 
 <script> 
+
+
 	$(document).ready(function(){
 		
-		$("button").on("click", function() {
-			var aaa;
-			var bbb;
-			var ccc;
-			console.log("값을 넣기 전인데 이것도 저기 스판의 아이디 저걸 가져오나???? : ",temp,hum,discom);
+		$("#test").on("click", function() {
 			$.ajax({
 				type : "get",
-				url : "http://mit305.iptime.org:10288",
+				url : "/mini/api/test",
+				timeout: 60000, 
+				success : function(data) {
+					//값을 보내고 결과받아온 값! 
+					console.log("test 받아온 값 : ", data);
+					var temp=data.substr(0,2);
+					var hum=data.substr(2);
+					//var temp=data.temp;
+					//var hum=data.hum;
+					console.log("온도 : ",temp);
+					console.log("습도 : ",hum);
+					//var temp=Number(tempStr);
+					//var hum=Number(humStr);
+					//console.log("잘 변환 되었나?",typeof temp,typeof hum);
+					var discom=(0.81*temp+0.01*hum*(0.99*temp-14.3)+46.3);
+					console.log("반올림 전값 인데 어디 한번 보자~",discom);
+					discom=discom.toFixed(2);
+					console.log("반올림 잘되나~",discom);
+					console.log("지금 값들 잘 가지고 있는 건가?? : ",temp,hum,discom);					
+					comparedata(temp,hum,discom);
+					$("#temp").text(temp+"°C");
+					$("#hum").text(hum+"%");
+					$("#discom").text(discom);					
+				},
+				error : function(error){
+					$("#temp").text("오류");
+					$("#hum").text("오류");
+					$("#discom").text("오류");
+				}			
+			});						
+		});
+		
+		$("button").on("click", function() {
+			$.ajax({
+				type : "get",
+				url : "http://59.12.4.106:7777",
 				timeout: 60000, 
 				success : function(data) {
 					//값을 보내고 결과받아온 값! 
 					console.log("받아온 값 : ", data);
 					var temp=data.substr(0,2);
 					var hum=data.substr(2);
+					//var temp=data.temp;
+					//var hum=data.hum;
 					console.log("온도 : ",temp);
 					console.log("습도 : ",hum);
 					//var temp=Number(tempStr);

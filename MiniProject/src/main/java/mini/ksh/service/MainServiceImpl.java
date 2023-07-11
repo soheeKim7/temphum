@@ -22,18 +22,18 @@ import mini.ksh.mapper.MainMapper;
 public class MainServiceImpl implements MainService {
 	
 	@Autowired
-	MainMapper mapper;
+	MainMapper mainmapper;
 
 	@Override
 	public List<DataVO> getList() {
 		log.info("getList ... ");
-		mapper.getList().forEach(vo -> log.info(vo));
-		return mapper.getList();
+		mainmapper.getList().forEach(vo -> log.info(vo));
+		return mainmapper.getList();
 	}
 
 	@Override
 	public ChartDataVO chartGetList() {
-		List<DataVO2> list=mapper.getList2();		
+		List<DataVO2> list=mainmapper.getList2();		
 		//리턴할 객체를 생성
 		ChartDataVO chart=new ChartDataVO();				
 		//리턴할 객체에 값 세팅
@@ -94,12 +94,12 @@ public class MainServiceImpl implements MainService {
 		//비교를 위해서 가져온 형식 숫자로 변환
 		int nowNum=Integer.parseInt(fomat.format(now));		
 		log.info("제대로 숫자 변형 되었겠지?"+nowNum);
-		return nowNum<=3000 ? mapper.under30Data() : mapper.upper30Data();
+		return nowNum<=3000 ? mainmapper.under30Data() : mainmapper.upper30Data();
 	}
 
 	@Override
 	public List<DiscomVO> discomGraphList() {
-		List<DataVO2> list=mapper.getList2();	
+		List<DataVO2> list=mainmapper.getList2();	
 		
 		List<DiscomVO> graphList=new ArrayList<>();
 		
@@ -117,5 +117,10 @@ public class MainServiceImpl implements MainService {
 		}
 		
 		return graphList;
+	}
+
+	@Override
+	public DataVO compareData() {
+		return mainmapper.compareData();
 	}
 }

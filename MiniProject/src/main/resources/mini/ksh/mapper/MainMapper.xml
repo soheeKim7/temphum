@@ -38,5 +38,12 @@
 		]]>
 	</select>	
 	
+	<select id="compareData" resultType="mini.ksh.domain.DataVO">
+		<![CDATA[		
+			select prodate,temp,hum,discom from 
+			(select /*+INDEX_desc(mini_temp index1)*/ rownum rn,prodate,temp,hum,discom from mini_temp 
+			where to_char(sysdate,'YYYY-MM-DD HH24')=to_char(prodate,'YYYY-MM-DD HH24') and rownum=1)
+		]]>
+	</select>	
 	
 </mapper>

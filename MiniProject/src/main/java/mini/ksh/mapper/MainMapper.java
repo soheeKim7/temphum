@@ -16,5 +16,9 @@ public interface MainMapper {
 	DataVO under30Data();
 	//현재시간 30분 초과일때, 비교할 대상 바로 전시간 데이터 가져오기
 	DataVO upper30Data();
+	
+	//현재시간 30분말고, 그냥 현재시간 기준으로, 비교할 대상-> 그해당 시간 같을때 데이터 가져오기
+	//(예>현재시간 2023-07-11 21:23:02 -> 비교대상 2023-07-11 21:00:00)
+	DataVO compareData();
 
 }

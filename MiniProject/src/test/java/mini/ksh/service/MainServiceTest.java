@@ -45,4 +45,9 @@ public class MainServiceTest {
 		log.info(service.discomGraphList());
 	}
 	
+	@Test
+	public void testcompareData() {
+		log.info("어디 비교데이터 잘 가져오나?? : "+service.compareData());
+	}
+	
 }
