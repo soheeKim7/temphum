@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet" href="resources/css/style2.css">
-<title>305교실 환경</title>
+<title>우리집 환경</title>
 </head>
 <body>
 <script 
@@ -18,7 +18,7 @@
 
 <h1>우리집 환경 실태</h1>
 <ul>
-	<li><h3>현재의 온도, 습도, 불쾌지수 조회 <button>조회</button></h3> <button id="test">테스트</button></li>
+	<li><h3>현재의 온도, 습도, 불쾌지수 조회 <button>조회</button></h3></li>
    	<ul>
    		<li>온도 : <span id="temp"></span> <span id="comparetemp"></span></li>
    		<li>습도 : <span id="hum"></span> <span id="comparehum"></span></li>
@@ -50,7 +50,7 @@
 		<tbody>
 				<tr>
 					<td>80이상~</td>
-					<td><img src="resources/img/매우불쾌.png" width="50"; height="50"></td>
+					<td><img src="resources/img/매우 불쾌.png" width="50"; height="50"></td>
 					<td>매우 높음</td>
 					<td>전원 불쾌감을 느낌. 높은 습도 탓에 땀이 증발하지 않아 몸이 끈적임</td>		
 				</tr>
@@ -62,7 +62,7 @@
 				</tr>
 				<tr>
 					<td>68~75</td>
-					<td><img src="resources/img/보통.png" width="50"; height="50"></td>
+					<td><img src="resources/img/보통 .png" width="50"; height="50"></td>
 					<td>보통</td>
 					<td>불쾌감을 느끼기 시작하여 일부는 땀이 남</td>		
 				</tr>
@@ -89,77 +89,42 @@
 
 	$(document).ready(function(){
 		
-		$("#test").on("click", function() {
-			$.ajax({
-				type : "get",
-				url : "/mini/api/test",
-				timeout: 60000, 
-				success : function(data) {
-					//값을 보내고 결과받아온 값! 
-					console.log("test 받아온 값 : ", data);
-					var temp=data.substr(0,2);
-					var hum=data.substr(2);
-					//var temp=data.temp;
-					//var hum=data.hum;
-					console.log("온도 : ",temp);
-					console.log("습도 : ",hum);
-					//var temp=Number(tempStr);
-					//var hum=Number(humStr);
-					//console.log("잘 변환 되었나?",typeof temp,typeof hum);
-					var discom=(0.81*temp+0.01*hum*(0.99*temp-14.3)+46.3);
-					console.log("반올림 전값 인데 어디 한번 보자~",discom);
-					discom=discom.toFixed(2);
-					console.log("반올림 잘되나~",discom);
-					console.log("지금 값들 잘 가지고 있는 건가?? : ",temp,hum,discom);					
-					comparedata(temp,hum,discom);
-					$("#temp").text(temp+"°C");
-					$("#hum").text(hum+"%");
-					$("#discom").text(discom);					
-				},
-				error : function(error){
-					$("#temp").text("오류");
-					$("#hum").text("오류");
-					$("#discom").text("오류");
-				}			
-			});						
-		});
-		
 		$("button").on("click", function() {
 			$.ajax({
 				type : "get",
-				url : "http://59.12.4.106:7777",
+				url : "/mini/api/get",
+				//Origin : "http://localhost:8081",				
 				timeout: 60000, 
 				success : function(data) {
 					//값을 보내고 결과받아온 값! 
-					console.log("받아온 값 : ", data);
+					console.log("온도습도 받아온 값 : ", data);
 					var temp=data.substr(0,2);
 					var hum=data.substr(2);
 					//var temp=data.temp;
 					//var hum=data.hum;
-					console.log("온도 : ",temp);
-					console.log("습도 : ",hum);
+					//console.log("온도 : ",temp);
+					//console.log("습도 : ",hum);
 					//var temp=Number(tempStr);
 					//var hum=Number(humStr);
 					//console.log("잘 변환 되었나?",typeof temp,typeof hum);
 					var discom=(0.81*temp+0.01*hum*(0.99*temp-14.3)+46.3);
-					console.log("반올림 전값 인데 어디 한번 보자~",discom);
+					//console.log("반올림 전값 인데 어디 한번 보자~",discom);
 					discom=discom.toFixed(2);
-					console.log("반올림 잘되나~",discom);
-					console.log("지금 값들 잘 가지고 있는 건가?? : ",temp,hum,discom);					
+					//console.log("반올림 잘되나~",discom);
+					console.log("계산까지 된 온도,습도,불쾌지수 : ",temp,hum,discom);					
 					comparedata(temp,hum,discom);
 					$("#temp").text(temp+"°C");
 					$("#hum").text(hum+"%");
 					$("#discom").text(discom);					
 				},
 				error : function(error){
+					console.log("온도습도 받아오는 ajax 오류 발생");
 					$("#temp").text("오류");
 					$("#hum").text("오류");
 					$("#discom").text("오류");
 				}			
 			});						
 		});
-		
-				
 		
 		function comparedata(temp,hum,discom){
 			$.ajax({
@@ -169,14 +134,14 @@
 				timeout: 60000, 
 				success : function(data) {
 					//값을 보내고 결과받아온 값! 
-					console.log("받아온 값 : ", data);
+					//console.log("비교한 데이터 받아온 값 : ", data);
 					
 					var comparetemp=data.temp;
 					var comparehum=data.hum;
 					var comparediscom=data.discom;
 					
-					console.log("비교할 데이터 값들 잘 받아오나? : ",comparetemp,comparehum,comparediscom);
-					console.log("이러면 값들 이어서 잘 가지고 오는건가??? : ",temp,hum,discom);
+					console.log("가져온 비교할 데이터 값들 온도,습도,불쾌지수 : ",comparetemp,comparehum,comparediscom);
+					console.log("기존의 데이터 값들 온도,습도,불쾌지수  : ",temp,hum,discom);
 					
 					if(comparetemp<temp){
 						$("#comparetemp").text("("+(temp-comparetemp)+"°C ▲)");
@@ -196,21 +161,22 @@
 					var result;
 					if(comparediscom<discom){
 						result=discom-comparediscom;
-						console.log("값 계산 한 거 : ",result);
+						//console.log("값 계산 한 거 : ",result);
 						result=result.toFixed(2);
-						console.log("값 계산 한 거,변환 후~ : ",result);
+						//console.log("값 계산 한 거,변환 후~ : ",result);
 						$("#comparediscom").text("("+result+" ▲)");								
 					}else if(comparediscom==discom){
 						$("#comparediscom").text("(0 -)");
 					}else{			
 						result=comparediscom-discom;
-						console.log("값 계산 한 거 : ",result);
+						//console.log("값 계산 한 거 : ",result);
 						result=result.toFixed(2);
-						console.log("값 계산 한 거,변환 후~ : ",result);
+						//console.log("값 계산 한 거,변환 후~ : ",result);
 						$("#comparediscom").text("("+result+" ▼)");								
 					}				
 				},
 				error : function(error){
+					console.log("온도습도 비교하는 ajax 오류 발생");
 					$("#comparetemp").text("오류");
 					$("#comparehum").text("오류");
 					$("#comparediscom").text("오류");
@@ -237,7 +203,7 @@
 		dataType : "json", // 받아오는 데이터 생략 가능
 		//contentType : 보내는거 없음
 		success : function(data) {
-			console.log("데이터 어떻게 가져오나 보자~",data);
+			console.log("가져온 차트 데이터",data);
 			myprodate = data.myprodate;
 			mytemp = data.mytemp;
 			myhum = data.myhum;
@@ -261,15 +227,10 @@
 		}
 	});
 	
-	
 </script>
-
-
 
 
 <script  src="resources/js/script.js"></script>
 <script  src="resources/js/script2.js"></script>
-
-
 </body>
 </html>

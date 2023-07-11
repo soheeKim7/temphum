@@ -55,11 +55,9 @@ public class TempRestcontroller  {
 		return service.discomGraphList();
 	}
 	
-	@GetMapping(value="api/test", produces=MediaType.TEXT_PLAIN_VALUE)
-	public String test(HttpServletRequest request, HttpServletResponse response){
+	@GetMapping(value="api/get", produces=MediaType.TEXT_PLAIN_VALUE)
+	public String test(){
 		BufferedReader in = null;
-//		Connection conn=null;
-//		PreparedStatement pre=null;
 		String result="";
 		
 		try {
@@ -73,15 +71,15 @@ public class TempRestcontroller  {
 			//4.요청하기(응답은 in 변수에 저장)
 			in = new BufferedReader(new InputStreamReader(httpUrlCon.getInputStream(), "UTF-8"));
 			//5.응답결과 찍기
-			System.out.println("일단 제이슨인데 어떻게 찍히나 보자 : "+in);
+//			System.out.println("일단 제이슨인데 어떻게 찍히나 보자 : "+in);
 			String line="";
 			String tempStr="";
 			String humStr="";
 			while((line = in.readLine()) != null) { // response를 차례대로 출력
 				result=line;
-				System.out.println("일단 라인 보자! : "+line);
+				System.out.println("받아온 결과! : "+line);
 				//{ "temp" : 27, "hum" : 64 }
-				System.out.println("일단 라인 길이 보자 : "+line.length());
+//				System.out.println("일단 라인 길이 보자 : "+line.length());
 //				tempStr=line.substring(11, 13);
 //				humStr=line.substring(23,25);
 				//제이슨으로 하려다가 교수님이랗 했던거랑 똑같이 세팅해주자! 텍스트파일로 받아서 처리하자
@@ -92,62 +90,13 @@ public class TempRestcontroller  {
         	System.out.println("오류 메시지 출력!");
             e.printStackTrace();
         }
-		
-		response.addHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+		//이렇게 헤더에 추가안해도 컨트롤러에서 받아서 주니까 cros 오류 발생 안함..
+		//response.addHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+		//response.addHeader("Access-Control-Allow-Origin", "http://m-it.iptime.org:4280/");
 		
 		return result;
 	}
-
 	
-	
-	
-//	implements Filter	
-//	private static final String[] allowedOrigins = {
-//            "http://localhost:8081", "http://m-it.iptime.org:4280/"
-//    };
-//
-//    @Override
-//    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-//        HttpServletRequest request = (HttpServletRequest) servletRequest;
-//
-//        String requestOrigin = request.getHeader("Origin");
-//        if(isAllowedOrigin(requestOrigin)) {
-//            // Authorize the origin, all headers, and all methods
-//            ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", requestOrigin);
-//            ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Headers", "*");
-//            ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods",
-//                    "GET, OPTIONS, HEAD, PUT, POST, DELETE");
-//
-//            HttpServletResponse resp = (HttpServletResponse) servletResponse;
-//
-//            // CORS handshake (pre-flight request)
-//            if (request.getMethod().equals("OPTIONS")) {
-//                resp.setStatus(HttpServletResponse.SC_ACCEPTED);
-//                return;
-//            }
-//        }
-//        // pass the request along the filter chain
-//        filterChain.doFilter(request, servletResponse);
-//    }
-//
-//    private boolean isAllowedOrigin(String origin){
-//        for (String allowedOrigin : allowedOrigins) {
-//            if(origin.equals(allowedOrigin)) return true;
-//        }
-//        return false;
-//    }
-//
-//	@Override
-//	public void init(FilterConfig filterConfig) throws ServletException {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void destroy() {
-//		// TODO Auto-generated method stub
-//		
-//	}
 	
 
 }
