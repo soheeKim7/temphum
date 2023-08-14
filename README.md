@@ -12,3 +12,4 @@ http://m-it.iptime.org:4280/mini/main
 
 ## 3. 메인 화면
 ![메인화면](https://github.com/soheeKim7/temphum/blob/main/MiniProject/etc/main.JPG)
+![메인화면](https://github.com/soheeKim7/temphum/blob/main/MiniProject/etc/main2.PNG)
