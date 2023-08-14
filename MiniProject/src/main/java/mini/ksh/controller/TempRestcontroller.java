@@ -32,6 +32,7 @@ public class TempRestcontroller  {
 	
 	MainService service;
 	
+	//테스트
 	@GetMapping(value="gettemp", produces="text/plain; charset=UTF-8")
 	public String gettemp() {
 		String[] strArr= {"1730","2440","2951","3270","1090"};
