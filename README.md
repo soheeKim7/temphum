@@ -16,7 +16,7 @@
 
 ## 4. 기능 및 화면 설명
 |기능|화면|기능 상세설명|
-|:---:|:---:|:---:|
+|:---:|:---:|---|
 |프로그램 구조 설계|![program](https://github.com/soheeKim7/temphum/blob/main/MiniProject/etc/program.png)|● Wifi를 이용해서 NodeMCU와 공유기를 연결하고, API Sever 구축 <br> ● 이때 공유기의 포트포워딩을 이용하여, API Sever를 다른 기기에서도 접속할 수 있도록 구현 <Br> ● Controller를 통해 필요할 때마다, API Sever에서 온도, 습도 Data 습득하여 DB에 저장|
 |온도, 습도 측정|![NodeMCU사진](https://github.com/soheeKim7/temphum/blob/main/MiniProject/etc/NodeMCU.jpg)|● NodeMCU에 온도, 습도 센서를 연결하여 측정 <br> ● 측정한 온도, 습도 Data를 제공하는 API 서버 구축 <Br> ● 정각마다 온도, 습도를 측정하여, 불쾌지수를 계산하고, 각각의 Data를 DB에 저장|
 |실시간 온도, 습도 조회|![search사진](https://github.com/soheeKim7/temphum/blob/main/MiniProject/etc/search.JPG)|● API 서버를 통해 실시간으로 온도, 습도를 조회하는 기능 <br> ● 현재 시간을 기준으로, DB에 저장되어 있는 정각의 Data와 비교하여 변화량 표시|
