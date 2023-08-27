@@ -20,5 +20,4 @@
 
 |기능|화면|기능 상세설명|
 |:---:|:---:|:---|
-|프로그램 구조 설계|![메인화면](https://github.com/soheeKim7/temphum/blob/main/MiniProject/etc/main.JPG)
-![메인화면밑](https://github.com/soheeKim7/temphum/blob/main/MiniProject/etc/main2.png)|메인화면|
+|프로그램 구조 설계|![메인화면](https://github.com/soheeKim7/temphum/blob/main/MiniProject/etc/main.JPG) <br> ![메인화면밑](https://github.com/soheeKim7/temphum/blob/main/MiniProject/etc/main2.png)|메인화면|
